@@ -1,0 +1,47 @@
+/* ================= RANGE WRAPPER ================= */
+.range-wrapper {
+  position: relative;
+  height: 40px;
+  margin-top: 10px;
+}
+
+/* ================= SLIDERS ================= */
+.range-slider {
+  position: absolute;
+  width: 100%;
+  top: 10px;
+  pointer-events: none; /* مهم */
+  -webkit-appearance: none;
+  background: transparent;
+}
+
+/* thumb */
+.range-slider::-webkit-slider-thumb {
+  pointer-events: all;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #02B290;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+/* ================= TRACK BASE ================= */
+.range-track {
+  position: absolute;
+  width: 100%;
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  top: 18px;
+}
+
+/* ================= ACTIVE RANGE ================= */
+.range-progress {
+  position: absolute;
+  height: 6px;
+  background: #02B290;
+  border-radius: 999px;
+}

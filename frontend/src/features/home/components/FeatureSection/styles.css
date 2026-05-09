@@ -1,0 +1,80 @@
+/* ================= FEATURE SECTION ================= */
+
+.feature-section {
+  margin: 25px 0;
+}
+
+/* SWIPER */
+.featureSwiper {
+  overflow: visible;
+}
+
+.featureSwiper .swiper-slide {
+  height: auto;
+  display: flex;
+}
+
+/* CARD */
+.feature-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background: #f3f4f6; /* نفس الصورة */
+  padding: 18px 20px;
+  border-radius: 14px;
+
+  transition: all 0.2s ease;
+}
+
+/* Hover خفيف */
+.feature-card:hover {
+  background: #eef0f2;
+}
+
+/* ICON */
+.icon-wrapper {
+  min-width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-wrapper svg {
+  font-size: 26px;
+  stroke-width: 1.5;
+}
+
+/* TEXT */
+.feature-card h6 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2b2b2b;
+  margin: 0;
+}
+
+.feature-card p {
+  font-size: 12px;
+  color: #8b8b8b;
+  margin: 2px 0 0;
+}
+
+/* ================= RESPONSIVE ================= */
+
+/* موبايل */
+@media (max-width: 575px) {
+  .feature-card {
+    padding: 14px;
+  }
+
+  .feature-card h6 {
+    font-size: 13px;
+  }
+
+  .feature-card p {
+    font-size: 11px;
+  }
+}

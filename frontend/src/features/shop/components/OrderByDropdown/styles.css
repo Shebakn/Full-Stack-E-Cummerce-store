@@ -1,0 +1,138 @@
+
+/* ================= BUTTON ================= */
+.orderDropdown {
+  width: 170px !important;
+  height: 50px !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 6px !important;
+  background: var(--white) !important;
+  padding: 0 15px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+
+  text-align: left !important;
+  text-transform: none !important;
+  min-width: unset !important;
+}
+
+.orderDropdown .info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.orderDropdown .arrowIcon {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: var(--dark-purple);
+}
+
+.orderDropdown .info span.label {
+  display: block;
+  font-size: 10px;
+  color: #888;
+  line-height: 1;
+}
+
+.orderDropdown .info span.name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dark-purple);
+}
+
+/* ================= DIALOG ================= */
+.orderDialog .MuiDialog-paper {
+  padding: 25px !important;
+  border-radius: 12px !important;
+  position: relative;
+}
+
+.orderDialog .MuiDialog-paper h4 {
+  color: var(--dark-purple);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.orderDialog .MuiDialog-paper p {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* ================= CLOSE BTN ================= */
+.orderDialog .closeBtn {
+  position: absolute !important;
+  top: 25px;
+  right: 20px;
+  width: 35px !important;
+  height: 35px !important;
+  background: var(--light-bg) !important;
+  color: var(--text-dark) !important;
+  border-radius: 50% !important;
+  z-index: 10;
+}
+
+.orderDialog .closeBtn:hover {
+  background: var(--dark-purple) !important;
+  color: white !important;
+}
+
+.orderDialog .closeBtn svg {
+  font-size: 20px;
+}
+
+/* ================= LIST ================= */
+.orderList {
+  list-style: none;
+  margin-top: 20px;
+  padding: 0;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.orderList li {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+/* ================= ITEMS ================= */
+.orderList li button {
+  width: 100%;
+  justify-content: flex-start !important;
+  text-transform: none !important;
+
+  color: var(--text-dark) !important;
+  background: var(--light-bg) !important;
+
+  border-radius: 8px !important;
+  padding: 12px 15px !important;
+
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+
+/* hover */
+.orderList li button:hover {
+  background: var(--dark-purple) !important;
+  color: white !important;
+}
+
+/* active */
+.orderList li button.active {
+  background: var(--primary-purple) !important;
+  color: #fff !important;
+}
+
+/* ================= SCROLL ================= */
+.orderList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.orderList::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}

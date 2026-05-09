@@ -1,0 +1,86 @@
+.filterApplySection {
+  margin-top: 20px;
+}
+
+.btn-apply-filters {
+  width: 100%;
+  background: #02B290;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.btn-apply-filters:hover {
+  background: #029c7f;
+}
+/* حاوية الترقيم */
+.paginationWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+/* التنسيق الأساسي للأزرار */
+.pageBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;  /* حجم الدائرة */
+  height: 42px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 50%; /* شكل دائري */
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  transition: all 0.2s ease-in-out;
+}
+
+/* الأرقام غير النشطة */
+.numBtn {
+  color: #444;
+}
+
+/* الرقم النشط - دائرة خضراء */
+.pageBtn.active {
+  background-color: #02B290; /* اللون المعتمد في التطبيق */
+  color: white !important;
+}
+
+/* أزرار الأسهم التنقلية */
+.navBtn {
+  font-size: 22px;
+  color: #888; /* لون باهت للأسهم مثل الصورة */
+}
+
+/* عند التمرير بالماوس */
+.pageBtn:hover:not(:disabled):not(.active) {
+  background-color: #f5f5f5;
+  color: #02B290;
+}
+
+/* حالة الزر المعطل */
+.pageBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* تحسين شكل أزرار الفلترة */
+.btn-apply-filters {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  background: #02B290;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}

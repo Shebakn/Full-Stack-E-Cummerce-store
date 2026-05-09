@@ -1,0 +1,106 @@
+/* نفس هيكل الكاتيجوري */
+.categoryTree {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.categoryNode {
+  display: flex;
+  flex-direction: column;
+}
+
+.categoryRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* LABEL */
+.categoryLabel {
+  margin: 0 !important;
+}
+
+.categoryLabel .MuiFormControlLabel-label {
+  display: flex;
+  align-items: center;
+  transition: 0.2s;
+}
+
+/* hover مثل الكاتيجوري */
+.categoryLabel:hover .MuiFormControlLabel-label {
+  filter: brightness(1.1);
+}
+
+/* CHECKBOX أخضر */
+.MuiCheckbox-root {
+  color: #02B290 !important;
+}
+
+.MuiCheckbox-root.Mui-checked {
+  color: #02B290 !important;
+}
+
+/* النجوم */
+.MuiRating-root {
+  color: #f59e0b !important;
+  transition: 0.2s;
+}
+
+/* hover على السطر كله */
+.categoryRow:hover .MuiRating-root {
+  filter: brightness(1.2);
+}
+/* نفس هيكل الكاتيجوري */
+.categoryTree {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.categoryNode {
+  display: flex;
+  flex-direction: column;
+}
+
+.categoryRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* LABEL */
+.categoryLabel {
+  margin: 0 !important;
+}
+
+.categoryLabel .MuiFormControlLabel-label {
+  display: flex;
+  align-items: center;
+  transition: 0.2s;
+}
+
+/* hover مثل الكاتيجوري */
+.categoryLabel:hover .MuiFormControlLabel-label {
+  filter: brightness(1.1);
+}
+
+/* CHECKBOX أخضر */
+.MuiCheckbox-root {
+  color: #02B290 !important;
+}
+
+.MuiCheckbox-root.Mui-checked {
+  color: #02B290 !important;
+}
+
+/* النجوم */
+.MuiRating-root {
+  color: #f59e0b !important;
+  transition: 0.2s;
+}
+
+/* hover على السطر كله */
+.categoryRow:hover .MuiRating-root {
+  filter: brightness(1.2);
+}

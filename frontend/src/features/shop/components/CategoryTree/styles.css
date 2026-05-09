@@ -1,0 +1,78 @@
+/* ROOT */
+.categoryTree {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.categoryNode {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ROW */
+.categoryRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* TOGGLE */
+.toggleBtn {
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.toggleBtn:hover {
+  color: #02B290;
+}
+
+.togglePlaceholder {
+  width: 20px;
+  height: 20px;
+}
+
+/* CONTENT (بديل FormControlLabel) */
+.categoryContent {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  flex: 1;
+  transition: 0.2s;
+}
+
+/* hover على كامل السطر */
+.categoryContent:hover {
+  color: #02B290;
+}
+
+/* النص */
+.categoryText {
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+/* checkbox scoped */
+.categoryTree .MuiCheckbox-root {
+  color: #02B290 !important;
+}
+
+.categoryTree .MuiCheckbox-root.Mui-checked {
+  color: #02B290 !important;
+}
+
+/* children */
+.categoryChildren {
+  margin-left: 22px;
+  padding-left: 10px;
+  border-left: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
