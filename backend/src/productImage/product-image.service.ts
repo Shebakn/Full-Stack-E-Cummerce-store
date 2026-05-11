@@ -215,36 +215,72 @@ export class ProductImageService {
   // ADD SINGLE IMAGE
   // =========================================================
   async addSingleImage(
-    productId: string,
-    file: Express.Multer.File,
-    isCover?: boolean,
-    position?: number,
-  ) {
-    await this.ensureProductExists(productId);
+  productId: string,
+  file?: Express.Multer.File,
+  url?: string,
+  isCover?: boolean,
+  position?: number,
+) {
+  console.log('productId:', productId);
 
-    if (!file) {
-      throw new BaseException(ErrorCodes.FILE_REQUIRED, 400);
-    }
+  await this.ensureProductExists(productId);
 
-    const uploaded = await this.cloudinary.uploadImage(file, 'products');
+  let imageUrl: string;
+  let publicId: string | null = null;
 
-    if (isCover) {
-      await this.prisma.productImage.updateMany({
-        where: { productId },
-        data: { isCover: false },
-      });
-    }
+  // =========================================
+  // Upload from file
+  // =========================================
+  if (file) {
+    const uploaded = await this.cloudinary.uploadImage(
+      file,
+      'products',
+    );
 
-    return this.prisma.productImage.create({
-      data: {
-        url: uploaded.url,
-        publicId: uploaded.publicId,
-        isCover: isCover ?? false,
-        position: position ?? 0,
-        productId,
-      },
+    imageUrl = uploaded.url;
+    publicId = uploaded.publicId;
+  }
+
+  // =========================================
+  // Use direct URL
+  // =========================================
+  else if (url) {
+    imageUrl = url;
+  }
+
+  // =========================================
+  // No file or URL provided
+  // =========================================
+  else {
+    throw new BaseException(
+      ErrorCodes.FILE_REQUIRED,
+      400,
+    );
+  }
+
+  // =========================================
+  // Handle cover image
+  // =========================================
+  if (isCover) {
+    await this.prisma.productImage.updateMany({
+      where: { productId },
+      data: { isCover: false },
     });
   }
+
+  // =========================================
+  // Create image
+  // =========================================
+  return this.prisma.productImage.create({
+    data: {
+      url: imageUrl,
+      publicId,
+      isCover: isCover ?? false,
+      position: position ?? 0,
+      productId,
+    },
+  });
+}
 
   // =========================================================
   // HELPERS

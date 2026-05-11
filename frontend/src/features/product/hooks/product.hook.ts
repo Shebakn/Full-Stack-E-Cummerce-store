@@ -23,11 +23,12 @@ export const useProduct = (id?: string) => {
 };
 
 // Hook to submit review
-export const useSubmitReview = () => {
+export const useSubmitReview = ( id: string ) => {
   const queryClient = useQueryClient();
 
+  
   return useMutation({
-    mutationFn: (review: NewReview) => productService.createReview(review),
+    mutationFn: (review: NewReview) => productService.createReview(id , review),
     onSuccess: (newReview, variables) => {
       // Invalidate and refetch product to update reviews and ratings
       queryClient.invalidateQueries({

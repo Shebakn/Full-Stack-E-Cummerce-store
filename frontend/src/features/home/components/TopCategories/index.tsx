@@ -14,8 +14,7 @@ import type { Category } from '@/common/interfaces/category.interface';
 import { useCategories } from '@/shared/components/layout/Header/hooks/category.hook';
 const TopCategories = () => {
   const { categories, isLoading } = useCategories();
-
-  console.log("IN TOP CATEGORIES")
+  
   return (
     <div className="topCategoriesSection homeProducts">
       <div className="container">

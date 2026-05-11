@@ -100,6 +100,7 @@ export class ProductController {
   @ApiOperation({ summary: 'Get product by ID' })
   @ApiParam({ name: 'id', type: String })
   async findOne(@Param('id') id: string) {
+    console.log(id)
     const result = await this.productService.findOne(id);
 
     return {

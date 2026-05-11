@@ -1,61 +1,67 @@
 import api from "@/api/client";
+import type { User } from "@/common/interfaces/user.interface";
 
-/* ================= LOGIN ================= */
-export const login = (data: {
+export interface LoginData {
   email: string;
   password: string;
-}) => {
-  return api.post("/auth/login", data);
-};
+}
 
-/* ================= REGISTER ================= */
-export const register = (data: {
+export interface RegisterData {
   name: string;
   email: string;
   password: string;
-}) => {
-  return api.post("/auth/register", data);
+}
+
+export interface AuthResponse {
+  data: {
+    user: User;
+    token?: string;
+    accessToken?: string;
+  };
+}
+
+/* ================= ERROR HANDLER ================= */
+const handleApiError = (error: any) => {
+  const message =
+    error?.response?.data?.error?.message ||
+    error?.response?.data?.message ||
+    error?.message ||
+    "Something went wrong";
+
+  const details = error?.response?.data?.error?.details;
+
+  const err = { message, details };
+
+  throw err;
 };
 
-/* ================= GET PROFILE ================= */
-export const getProfile = () => {
-  return api.get("/profile/me");
+/* ================= LOGIN ================= */
+export const login = async (data: LoginData): Promise<AuthResponse> => {
+  try {
+    const res = await api.post("/auth/login", data);
+    return res.data;
+  } catch (error) {
+    throw handleApiError(error);
+  }
 };
 
-// import api from "@/api/client";
+/* ================= REGISTER ================= */
+export const register = async (data: RegisterData): Promise<AuthResponse> => {
+  try {
+    const res = await api.post("/auth/register", data);
+    return res.data;
+  } catch (error) {
+    throw handleApiError(error);
+  }
+};
 
-// /* ================= LOGIN ================= */
-// export const login = async (data: {
-//   email: string;
-//   password: string;
-// }) => {
-//   const res = await api.post(
-//     "/auth/login",
-//     data
-//   );
-
-//   return res.data;
-// };
-
-// /* ================= REGISTER ================= */
-// export const register = async (data: {
-//   name: string;
-//   email: string;
-//   password: string;
-// }) => {
-//   const res = await api.post(
-//     "/auth/register",
-//     data
-//   );
-
-//   return res.data;
-// };
-
-// /* ================= GET PROFILE ================= */
-// export const getProfile = async () => {
-//   const res = await api.get(
-//     "/profile/me"
-//   );
-
-//   return res.data;
-// };
+/* ================= PROFILE ================= */
+export const getProfile = async () => {
+  try {
+    const res = await api.get("/profile/me");
+    console.log("Auth me: ", res.data)
+    return res.data;
+  } catch (error) {
+    throw handleApiError(error);
+  }
+};

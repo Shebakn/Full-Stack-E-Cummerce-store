@@ -78,20 +78,23 @@ export class ProductImageController {
   // POST /products/:productId/images/single
   // =========================================================
   @Post('products/:productId/images/single')
-  @HttpCode(HttpStatus.CREATED)
-  @UseInterceptors(FileInterceptor('file'))
-  @ApiOperation({ summary: 'Upload single image' })
-  @ApiParam({ name: 'productId', type: String })
-  @ApiConsumes('multipart/form-data')
-  @ApiBody({ type: CreateProductImageDto })
-  async addSingleImage(
-  productId: string,
+@HttpCode(HttpStatus.CREATED)
+@UseInterceptors(FileInterceptor('file'))
+@ApiOperation({ summary: 'Upload single image' })
+@ApiParam({ name: 'productId', type: String })
+@ApiConsumes('multipart/form-data')
+@ApiBody({ type: CreateProductImageDto })
+async addSingleImage(
+  @Param('productId') productId: string, // 🔥 FIX هنا
   @Body() dto: CreateProductImageDto,
-  @UploadedFile() file: Express.Multer.File,
+  @UploadedFile() file?: Express.Multer.File,
 ) {
+  console.log(dto);
+console.log(file);
   const result = await this.productImageService.addSingleImage(
     productId,
     file,
+    dto.url,
     dto.isCover,
     dto.position,
   );

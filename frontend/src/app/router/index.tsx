@@ -5,10 +5,11 @@ import { MainLayout } from "@/layouts/MainLayout";
 import { AuthGuard } from "../guards/AuthGuard"; 
 import { AdminGuard } from "../guards/AdminGuard"; 
 
-import { LoginPage } from "@/features/auth/pages/LoginPage";
+import LoginPage from "../../features/auth/pages/Login/LoginPage";
 import HomePage from "@/features/home/pages";
 import Shop from "@/features/shop/pages";
 import ProductDetails from "../../features/product/pages";
+import RegisterPage from "../../features/auth/pages/RegisterPage";
 
 
 
@@ -24,6 +25,10 @@ export const AppRouter = createBrowserRouter([
       {
         path: "/login",
         element: <LoginPage />,
+      },
+      {
+        path: "/register",
+        element: <RegisterPage />,
       },
       {
         path: "/shop",

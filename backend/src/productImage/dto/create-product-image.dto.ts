@@ -1,17 +1,12 @@
-import {
-  IsBoolean,
-  IsInt,
-  IsOptional,
-  IsString,
-} from 'class-validator';
-
+import { IsBoolean, IsInt, IsOptional, IsString } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateProductImageDto {
-  @ApiProperty({ example: 'https://image-url.com/img.png' })
+  @ApiPropertyOptional({ example: 'https://image-url.com/img.png' })
+  @IsOptional()
   @IsString()
-  url!: string;
+  url?: string;
 
   @ApiPropertyOptional({ example: true })
   @IsOptional()

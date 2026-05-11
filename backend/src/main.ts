@@ -31,12 +31,13 @@ async function bootstrap() {
   // VALIDATION PIPE
   // =========================
   app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      transform: true,
-    }),
-  );
+  new ValidationPipe({
+    transform: true,
+    whitelist: true,
+    forbidNonWhitelisted: true,
+    skipMissingProperties: true, // 🔥 هذا هو المفتاح
+  }),
+);
 
   // =========================
   // INTERCEPTORS

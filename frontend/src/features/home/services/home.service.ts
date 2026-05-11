@@ -13,18 +13,12 @@ export const getBestSellers = async (
       ...(includeChildren !== undefined && { includeChildren }),
     };
 
-    console.log(categoryId)
-
     const result = await api.get("/product", {
       params,
     });
 
-    console.log("BEST SELLERS:", result.data);
-
     return result.data;
   } catch (error: any) {
-    console.log("API ERROR:", error.response?.data);
-    console.log("STATUS:", error.response?.status);
 
     throw error;
   }
@@ -45,7 +39,6 @@ export const getNewArrivals = async () => {
 
     return result.data;
   } catch (error: any) {
-    console.log("NEW ARRIVALS ERROR:", error.response?.data);
     throw error;
   }
 };

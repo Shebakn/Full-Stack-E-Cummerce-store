@@ -12,13 +12,14 @@ export const productService = {
   },
 
   // Create new review
-  createReview: async (review: NewReview): Promise<Review> => {
-    const { data } = await api.post(`/reviews`, review);
-    return data.data || data;
+  createReview: async (id: string, review: NewReview): Promise<Review> => {
+    const res = await api.post(`products/${id}/reviews`, review);
+    console.log("Posting review : ", res)
+    return res.data.data || res.data;
   },
 
-  // Update product rating (if needed)
-  updateProductRating: async (productId: string): Promise<void> => {
-    await api.patch(`/product/${productId}/update-rating`);
-  },
+  // // Update product rating (if needed)
+  // updateProductRating: async (productId: string): Promise<void> => {
+  //   await api.patch(`/products/${productId}/update-rating`);
+  // },
 };

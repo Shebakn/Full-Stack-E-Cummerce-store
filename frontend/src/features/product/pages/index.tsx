@@ -43,7 +43,7 @@ const ProductDetails = () => {
 
   // React Query
   const { data: product, isLoading, error } = useProduct(id);
-  const submitReviewMutation = useSubmitReview();
+  const submitReviewMutation = useSubmitReview(id);
 
   // Zustand UI Store
   const {
@@ -112,37 +112,59 @@ const ProductDetails = () => {
   };
 
   /* ================= SUBMIT REVIEW ================= */
-  const handleSubmitReview = async () => {
-    if (!userRating || userRating === 0) {
-      toast.error("Please select a rating");
-      return;
-    }
+ const handleSubmitReview = () => {
+  if (!id) {
+    toast.error("Product not found");
+    return;
+  }
 
-    if (!userReview.trim()) {
-      toast.error("Please write your review");
-      return;
-    }
+  const rating = Number(userRating);
 
-    if (!id) return;
+  if (!rating || rating < 1 || rating > 5) {
+    toast.error("Please select a rating between 1 and 5");
+    return;
+  }
 
-    submitReviewMutation.mutate(
-      {
-        productId: id,
-        rating: userRating,
-        reviewText: userReview,
+  const text = userReview.trim();
+
+  if (!text) {
+    toast.error("Please write your review");
+    return;
+  }
+
+  console.log("REVIEW PAYLOAD:", {
+  productId: id,
+  rating: userRating,
+  reviewText: userReview,
+  typeRating: typeof userRating,
+});
+
+  submitReviewMutation.mutate(
+    {
+      rating,
+      reviewText: text,
+    },
+    {
+      onSuccess: () => {
+        toast.success("Review submitted successfully");
+
+        // reset form
+        setUserRating(0);
+        setUserReview("");
+
+        // switch tab
+        setTab("reviews");
       },
-      {
-        onSuccess: () => {
-          // Reset form
-          setUserRating(0);
-          setUserReview("");
-          // Switch to reviews tab
-          setTab("reviews");
-        },
-      }
-    );
-  };
 
+      onError: (err: any) => {
+        toast.error(
+          err?.response?.data?.error?.message ||
+          "Failed to submit review"
+        );
+      },
+    }
+  );
+};
   /* ================= LOADING STATE ================= */
   if (isLoading) {
     return (

@@ -32,14 +32,14 @@ export const useInitAuth = () => {
 
         // تحقق من السيرفر
         const res = await getProfile();
-        console.log("get profile data: ", res.data.data)
 
         // 🔥 استخدم currentToken
         setAuth(
-          res.data.data,
+          res.data,
           currentToken
         );
       } catch (error) {
+        console.log("Error get profile: ", error)
         logout();
       } finally {
         setIsInitializing(false);

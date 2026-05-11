@@ -1,28 +1,24 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, Button, Spinner } from "react-bootstrap";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 
-import { useAuth } from "../hooks/auth.hook";
-import { toast } from "react-hot-toast";
+import { useAuth } from "../../hooks/auth.hook";
 
 import "./styles.css";
 
-/* ================= VALIDATION ================= */
 const schema = z.object({
-  name: z.string().min(3, "Name too short"),
   email: z.string().email("Invalid email"),
   password: z.string().min(6, "Min 6 characters"),
 });
 
 type FormData = z.infer<typeof schema>;
 
-const RegisterPage = () => {
-  const { handleRegister, isRegistering } = useAuth();
+const LoginPage = () => {
+  const { handleLogin, isLoggingIn } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -34,36 +30,23 @@ const RegisterPage = () => {
     resolver: zodResolver(schema),
   });
 
+  /* ================= IMPORTANT FIX ================= */
   const onSubmit = (data: FormData) => {
-    handleRegister(data, {
-      onError: (err: any) => {
-        toast.error(err.message);
-      },
-    });
+    handleLogin(data);
   };
 
   return (
     <div className="register-container">
       <div className="register-card">
 
-        <h2 className="register-title">Create Account</h2>
+        <h2 className="register-title">Login</h2>
 
         <Form onSubmit={handleSubmit(onSubmit)}>
-
-          {/* NAME */}
-          <Form.Control
-            placeholder="Full Name"
-            className="custom-input"
-            {...register("name")}
-          />
-          {errors.name && (
-            <small className="text-danger">{errors.name.message}</small>
-          )}
 
           {/* EMAIL */}
           <Form.Control
             placeholder="Email"
-            className="custom-input mt-3"
+            className="custom-input"
             {...register("email")}
           />
           {errors.email && (
@@ -95,28 +78,19 @@ const RegisterPage = () => {
           <Button
             type="submit"
             className="btn-register w-100 mt-4"
-            disabled={isRegistering}
+            disabled={isLoggingIn}
           >
-            {isRegistering ? (
-              <Spinner size="sm" />
-            ) : (
-              "Create Account"
-            )}
+            {isLoggingIn ? <Spinner size="sm" /> : "Login"}
           </Button>
         </Form>
 
         <p className="text-center mt-3">
-          Already have account? <Link to="/login">Login</Link>
+          Don’t have account? <Link to="/register">Register</Link>
         </p>
 
-        <div className="divider">OR</div>
-
-        <Button className="google-btn w-100">
-          <FcGoogle /> Continue with Google
-        </Button>
       </div>
     </div>
   );
 };
 
-export default RegisterPage;
+export default LoginPage;

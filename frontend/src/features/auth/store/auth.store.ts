@@ -1,8 +1,5 @@
-// features/auth/store/auth.store.ts
-
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
 import type { User } from "@/common/interfaces/user.interface";
 
 interface AuthState {
@@ -10,13 +7,13 @@ interface AuthState {
   user: User | null;
   token: string | null;
 
-  // ================= DERIVED AUTH =================
-  isAuthenticated: boolean;
-
   // ================= ROLE =================
-  role: string | undefined;
+  role?: string;
   isAdmin: boolean;
   isUser: boolean;
+
+  // ================= DERIVED (NOT STORED LOGICALLY) =================
+  isAuthenticated: boolean;
 
   // ================= ACTIONS =================
   setAuth: (user: User, token: string) => void;
@@ -26,16 +23,17 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       // ================= INITIAL STATE =================
       user: null,
       token: null,
 
-      isAuthenticated: false,
-
       role: undefined,
       isAdmin: false,
       isUser: false,
+
+      // 🔥 لا نخزنها بشكل يعتمد عليه
+      isAuthenticated: false,
 
       // ================= SET AUTH =================
       setAuth: (user, token) =>
@@ -43,18 +41,12 @@ export const useAuthStore = create<AuthState>()(
           user,
           token,
 
-          // auth
-          isAuthenticated:
-            !!user && !!token,
-
-          // role
           role: user.role,
+          isAdmin: user.role === "ADMIN",
+          isUser: user.role === "USER",
 
-          isAdmin:
-            user.role === "ADMIN",
-
-          isUser:
-            user.role === "USER",
+          // 🔥 derived
+          isAuthenticated: !!user && !!token,
         }),
 
       // ================= UPDATE USER =================
@@ -63,15 +55,10 @@ export const useAuthStore = create<AuthState>()(
           user,
 
           role: user.role,
+          isAdmin: user.role === "ADMIN",
+          isUser: user.role === "USER",
 
-          isAdmin:
-            user.role === "ADMIN",
-
-          isUser:
-            user.role === "USER",
-
-          isAuthenticated:
-            !!user && !!state.token,
+          isAuthenticated: !!user && !!state.token,
         })),
 
       // ================= LOGOUT =================
@@ -80,24 +67,20 @@ export const useAuthStore = create<AuthState>()(
           user: null,
           token: null,
 
-          isAuthenticated: false,
-
           role: undefined,
           isAdmin: false,
           isUser: false,
+
+          isAuthenticated: false,
         }),
     }),
     {
       name: "auth-storage",
 
-      // 🔥 لا تحفظ الميثودز
+      // 🔥 نخزن فقط البيانات الأساسية
       partialize: (state) => ({
         user: state.user,
         token: state.token,
-
-        isAuthenticated:
-          state.isAuthenticated,
-
         role: state.role,
         isAdmin: state.isAdmin,
         isUser: state.isUser,

@@ -11,7 +11,6 @@ export const useBestSellers = (params: ProductQuery = {}) => {
     limit,
   } = params;
 
-  console.log("Fetching include : ", includeChildren)
   return useQuery({
     queryKey: bestSellersKeys.list(
       categoryId,
