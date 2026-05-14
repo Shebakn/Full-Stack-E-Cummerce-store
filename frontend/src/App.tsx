@@ -1,22 +1,18 @@
 // App.tsx
 
 import { AppProviders } from "./app/providers/AppProviders";
-import { useInitAuth } from "./app/auth/auth.init";
+import { useAuthUser } from "@/features/auth/hooks/auth-user";
 
 function App() {
-  const { isInitializing } = useInitAuth();
+  const { isLoading, isUser } = useAuthUser();
 
-  
-
+  console.log({ isLoading, isUser});
   // ⏳ ننتظر التحقق الأولي من المستخدم
-  if (isInitializing) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  const user = localStorage.getItem("auth-storage");
-  console.log(user);
-  
-  // ✅ التطبيق جاهز
+
   return <AppProviders />;
 }
 

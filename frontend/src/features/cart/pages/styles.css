@@ -1,0 +1,222 @@
+:root {
+  --boro-green: #019376;
+  --boro-dark: #212121;
+  --bg-gray: #f7f8fa;
+  --border-light: #ebebeb;
+}
+
+.cart-page-main {
+  background-color: var(--bg-gray);
+  padding: 50px 0;
+  min-height: 80vh;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Header */
+.cart-header-minimal {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 30px;
+}
+
+.cart-header-minimal h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.clear-all-text {
+  background: none;
+  border: none;
+  color: #888;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Cart Card */
+.boro-cart-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  border: 1px solid var(--border-light);
+  transition: 0.3s;
+}
+
+.boro-cart-card:hover {
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.product-details {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.img-wrapper img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  background: #fdfdfd;
+  border-radius: 8px;
+}
+
+.product-title {
+  display: block;
+  font-weight: 600;
+  color: var(--boro-dark);
+  text-decoration: none;
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+.attributes-row {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 5px;
+}
+
+.unit-price {
+  font-weight: 700;
+  color: var(--boro-green);
+}
+
+/* Actions */
+.actions-section {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.quantity-stepper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-light);
+  border-radius: 50px;
+  padding: 5px 15px;
+  gap: 15px;
+}
+
+.quantity-stepper button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #555;
+  display: flex;
+  align-items: center;
+}
+
+.item-total-price {
+  font-weight: 700;
+  min-width: 80px;
+  text-align: right;
+}
+
+.remove-btn-icon:hover {
+  color: #ff4d4f !important;
+  background: #fff1f0 !important;
+}
+
+/* Summary Card */
+.summary-sticky-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 25px;
+  border: 1px solid var(--border-light);
+  position: sticky;
+  top: 20px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  color: #666;
+}
+
+.summary-row.total {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--boro-dark);
+}
+
+.btn-boro-checkout {
+  display: block;
+  background: var(--boro-green);
+  color: white;
+  text-align: center;
+  padding: 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  margin-top: 20px;
+  transition: 0.3s;
+}
+
+.btn-boro-checkout:hover {
+  background: #017a62;
+  color: white;
+}
+
+.trust-badges {
+  margin-top: 20px;
+  font-size: 12px;
+  color: #999;
+  display: flex;
+  gap: 15px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .boro-cart-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .actions-section {
+    width: 100%;
+    justify-content: space-between;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+  }
+}
+
+.coupon-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.coupon-box input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+}
+
+.coupon-box button {
+  background: var(--boro-green);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.applied-coupon {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.summary-row.discount {
+  color: #019376;
+  font-weight: 600;
+}

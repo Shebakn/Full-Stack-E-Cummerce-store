@@ -1,25 +1,46 @@
 import React, { useState } from "react";
 import { Checkbox } from "@mui/material";
+import type { Category } from "@/common/types/category.type";
 import "./styles.css";
 
 /* ================= TYPES ================= */
-type Category = {
-  id: string;
-  name: string;
-  children?: Category[];
-};
 
 type Props = {
   categories: Category[];
-
-  // 🔥 بدل single id
   selectedIds: string[];
-
-  // 🔥 يرجع array كاملة
   onChange?: (ids: string[]) => void;
+
+  // 🔥 جديد
+  loading?: boolean;
+};
+
+/* ================= SKELETON ================= */
+
+const SkeletonItem = () => {
+  return (
+    <div className="categoryRow skeletonRow">
+      <span className="togglePlaceholder" />
+
+      <div className="categoryContent">
+        <div className="skeletonCheckbox" />
+        <div className="skeletonText" />
+      </div>
+    </div>
+  );
+};
+
+const CategorySkeleton = () => {
+  return (
+    <div className="categoryTree">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <SkeletonItem key={i} />
+      ))}
+    </div>
+  );
 };
 
 /* ================= NODE ================= */
+
 const CategoryNode = ({
   category,
   selectedIds,
@@ -31,7 +52,8 @@ const CategoryNode = ({
 }) => {
   const [open, setOpen] = useState(false);
 
-  const hasChildren = category.children && category.children.length > 0;
+  const hasChildren =
+    category.children && category.children.length > 0;
 
   const checked = selectedIds.includes(category.id);
 
@@ -70,9 +92,14 @@ const CategoryNode = ({
         )}
 
         {/* CHECKBOX + LABEL */}
-        <div className="categoryContent" onClick={handleToggle}>
+        <div
+          className="categoryContent"
+          onClick={handleToggle}
+        >
           <Checkbox size="small" checked={checked} />
-          <span className="categoryText">{category.name}</span>
+          <span className="categoryText">
+            {category.name}
+          </span>
         </div>
 
       </div>
@@ -96,11 +123,23 @@ const CategoryNode = ({
 };
 
 /* ================= ROOT ================= */
+
 const CategoryTree: React.FC<Props> = ({
   categories,
   selectedIds,
   onChange,
+  loading,
 }) => {
+  // 🔥 حالة loading
+  if (loading) {
+    return <CategorySkeleton />;
+  }
+
+  // 🔥 حالة فاضية
+  if (!categories.length) {
+    return <div className="emptyState">No categories</div>;
+  }
+
   return (
     <div className="categoryTree">
       {categories.map((cat) => (

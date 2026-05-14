@@ -8,10 +8,10 @@ import ProductBanner from "../components/ProductBanner";
 import { useBestSellersStore } from "../stores/best-sellers.store";
 import { useBestSellers } from "../hooks/best-sellers.hook";
 import ProductSection from "../components/ProductSection";
-import { useCategories } from "@/shared/components/layout/Header/hooks/category.hook";
+
 import { useNewArrivals } from "../hooks/new-arrivals.hook";
 import TopCategories from "../components/TopCategories";
-
+import { useCategories } from "../../../common/hooks/category.hook";
 const HomePage = () => {
 
   const { filters, setFilters } = useBestSellersStore();
@@ -31,12 +31,10 @@ const HomePage = () => {
   return (
     <>
 
-    <TopCategories />
-
-    
       {/* Home banner */}
       <HomeBanner />
 
+      <TopCategories />
 
       <ProductSection
         title="Best Sellers"

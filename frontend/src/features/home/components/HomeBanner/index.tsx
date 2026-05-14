@@ -58,7 +58,7 @@ const HomeBanner: React.FC = () => {
           centeredSlides={true}
           loop={true}
           autoplay={{ delay: 5000 }}
-          className="mainSwiper"
+          className=""
         >
           {images.map((img, i) => (
             <SwiperSlide key={i} className="custom-slide">

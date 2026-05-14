@@ -1,55 +1,53 @@
-// features/auth/hooks/useInitAuth.ts
+// // features/auth/hooks/useInitAuth.ts
 
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
-import { getProfile } from "@/features/auth/services/auth.service";
-import { useAuthStore } from "@/features/auth/store/auth.store";
+// import { getProfile } from "@/features/auth/services/auth.service";
+// import { useAuthStore } from "@/features/auth/store/auth.store";
 
-export const useInitAuth = () => {
-  console.log("Init auth")
-  const [isInitializing, setIsInitializing] =
-    useState(true);
+// export const useInitAuth = () => {
+//   const [isInitializing, setIsInitializing] =
+//     useState(true);
 
-  const {
-    setAuth,
-    logout,
-  } = useAuthStore();
+//   const {
+//     setAuth,
+//     logout,
+//   } = useAuthStore();
 
-  useEffect(() => {
-    const init = async () => {
-      try {
-        // 🔥 انتظر hydration
-        await useAuthStore.persist.rehydrate();
+//   useEffect(() => {
+//     const init = async () => {
+//       try {
+//         // 🔥 انتظر hydration
+//         await useAuthStore.persist.rehydrate();
 
-        // 🔥 خذ أحدث token
-        const currentToken =
-          useAuthStore.getState().token;
+//         // 🔥 خذ أحدث token
+//         const currentToken =
+//           useAuthStore.getState().token;
 
-        // ما فيه token
-        if (!currentToken) {
-          return;
-        }
+//         // ما فيه token
+//         if (!currentToken) {
+//           return;
+//         }
 
-        // تحقق من السيرفر
-        const res = await getProfile();
+//         // تحقق من السيرفر
+//         const res = await getProfile();
 
-        // 🔥 استخدم currentToken
-        setAuth(
-          res.data,
-          currentToken
-        );
-      } catch (error) {
-        console.log("Error get profile: ", error)
-        logout();
-      } finally {
-        setIsInitializing(false);
-      }
-    };
+//         // 🔥 استخدم currentToken
+//         setAuth(
+//           res.data,
+//           currentToken
+//         );
+//       } catch (error) {
+//         logout();
+//       } finally {
+//         setIsInitializing(false);
+//       }
+//     };
 
-    init();
-  }, []);
+//     init();
+//   }, []);
 
-  return {
-    isInitializing,
-  };
-};
+//   return {
+//     isInitializing,
+//   };
+// };

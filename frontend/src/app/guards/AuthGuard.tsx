@@ -1,9 +1,12 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuthStore } from "@/features/auth/store/auth.store"; 
+import { useAuthUser } from "@/features/auth/hooks/auth-user";
 
 export const AuthGuard = () => {
-  const { isAuthenticated } = useAuthStore();
+  const { isLoading ,isAuthenticated } = useAuthUser();
 
+  if (isLoading){
+    return <div>Loading...</div>
+  }
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }

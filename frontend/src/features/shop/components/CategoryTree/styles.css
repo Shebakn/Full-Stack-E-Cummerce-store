@@ -76,3 +76,59 @@
   flex-direction: column;
   gap: 6px;
 }
+
+/* Skeleton base */
+.skeletonRow {
+  opacity: 0.7;
+}
+
+.skeletonCheckbox {
+  width: 18px;
+  height: 18px;
+  background: #e5e7eb;
+  border-radius: 3px;
+  margin-right: 8px;
+}
+
+.skeletonText {
+  width: 120px;
+  height: 14px;
+  background: #e5e7eb;
+  border-radius: 4px;
+}
+
+/* shimmer animation */
+.skeletonCheckbox,
+.skeletonText {
+  position: relative;
+  overflow: hidden;
+}
+
+.skeletonCheckbox::after,
+.skeletonText::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  height: 100%;
+  width: 150%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
+  animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    left: 150%;
+  }
+}
+
+/* empty state */
+.emptyState {
+  padding: 8px;
+  color: #888;
+}

@@ -116,9 +116,12 @@ const ProductGrid: React.FC<Props> = ({ products, loading = false }) => {
         )}
       </div>
 
-      <button className="btn-add">
-        Add to Cart
+      <Link to={`/product/${product.id}`}>
+        <button className="btn-add">
+        View Details
       </button>
+      </Link>
+      
 
     </div>
   </Col>

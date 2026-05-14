@@ -1,15 +1,15 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { login } from "../services/auth.service";
-import { useAuthStore } from "../store/auth.store";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { setToken, removeToken } from "@/common/utils/auth-token";
+
+export const AUTH_QUERY_KEY = ["auth-user"];
 
 export const useAuth = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  const { setAuth, logout } = useAuthStore();
-
-  /* ================= LOGIN ================= */
   const loginMutation = useMutation({
     mutationFn: login,
 
@@ -17,7 +17,11 @@ export const useAuth = () => {
       const user = res.data.user;
       const token = res.data.accessToken || res.data.token;
 
-      setAuth(user, token);
+      // 🔥 خزّن التوكن فقط
+      setToken(token);
+
+      // 🔥 خزّن user في cache
+      queryClient.setQueryData(AUTH_QUERY_KEY, user);
 
       toast.success("Welcome back 👋");
 
@@ -36,6 +40,16 @@ export const useAuth = () => {
       }
     },
   });
+
+  const logout = () => {
+    removeToken();
+
+    queryClient.removeQueries({
+      queryKey: AUTH_QUERY_KEY,
+    });
+
+    // navigate("/login");
+  };
 
   return {
     handleLogin: loginMutation.mutate,

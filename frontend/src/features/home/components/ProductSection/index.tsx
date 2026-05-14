@@ -9,6 +9,7 @@ import type { Category } from "@/common/interfaces/category.interface";
 import "swiper/css";
 import "swiper/css/navigation";
 import "./styles.css";
+import { Link } from "react-router-dom";
 
 /* ================= Skeleton ================= */
 const ProductCardSkeleton = () => {
@@ -53,7 +54,6 @@ const ProductSection: React.FC<Props> = ({
   activeCategory,
   onFilterChange,
 }) => {
-  console.log(products)
   return (
     <div className="homeProducts py-5">
       <div className="container">
@@ -154,7 +154,7 @@ const ProductSection: React.FC<Props> = ({
                         size="small"
                       />
                       <span className="reviewCount">
-                        {product.ratingsQuantity} (Reviews)
+                        ({product.ratingsQuantity} Reviews)
                       </span>
                     </div>
 
@@ -166,9 +166,11 @@ const ProductSection: React.FC<Props> = ({
                     </div>
 
                     {/* BUTTON */}
+                    <Link to={`/product/${product.id}`} >
                     <button className="btn-add">
-                      Add to Cart
+                      View Details
                     </button>
+                    </Link>
 
                   </div>
                 </SwiperSlide>

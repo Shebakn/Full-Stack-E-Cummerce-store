@@ -22,7 +22,7 @@ import { useProductStore } from "@/features/shop/stores/products.store";
 import { useProducts } from "@/features/shop/hooks/products.hook"; 
 
 import "./styles.css";
-import { useCategories } from "@/features/shop/hooks/categories.hook";
+import { useCategories } from "@/common/hooks/category.hook";
 
 /* ================= PAGINATION ================= */
 
@@ -105,7 +105,7 @@ const Shop = () => {
 
   const {
     categories,
-    loading: categoriesLoading,
+    isLoading: categoriesLoading,
   } = useCategories();
  
   const {
@@ -171,16 +171,15 @@ const Shop = () => {
               <h6>Categories</h6>
 
               <CategoryTree
-                categories={categories}
-                selectedIds={
-                  query.categoryIds ?? []
-                }
-                onChange={(ids) =>
-                  setQuery({
-                    categoryIds: ids,
-                  })
-                }
-              />
+  categories={categories}
+  loading={categoriesLoading}
+  selectedIds={query.categoryIds ?? []}
+  onChange={(ids) =>
+    setQuery({
+      categoryIds: ids,
+    })
+  }
+/>
 
               <hr />
 

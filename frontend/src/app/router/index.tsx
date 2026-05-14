@@ -10,7 +10,7 @@ import HomePage from "@/features/home/pages";
 import Shop from "@/features/shop/pages";
 import ProductDetails from "../../features/product/pages";
 import RegisterPage from "../../features/auth/pages/RegisterPage";
-
+import CartPage from "../../features/cart/pages"; 
 
 
 export const AppRouter = createBrowserRouter([
@@ -51,6 +51,11 @@ export const AppRouter = createBrowserRouter([
           {
             path: "/profile",
             element: <div>Profile</div>,
+          },
+
+          {
+            path: "/cart",
+            element: < CartPage/>,
           },
         ],
       },

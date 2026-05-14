@@ -13,6 +13,7 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { ProductImageModule } from './productImage/product-image.module';
 import { ReviewModule } from './reviews/review.module';
 import { ProductVariantModule } from './productVarient/product-variant.module';
+import { CartModule } from './cart/cart.module';
 
 @Module({
   imports: [
@@ -49,6 +50,8 @@ import { ProductVariantModule } from './productVarient/product-variant.module';
     ProductVariantModule,
 
     ProductImageModule,
+
+    CartModule,
   ],
 })
 export class AppModule {}

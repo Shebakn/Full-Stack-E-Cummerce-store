@@ -4,10 +4,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, Button, Spinner } from "react-bootstrap";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 import { useAuth } from "../../hooks/auth.hook";
-
+import { useAuthUser } from "../../hooks/auth-user";
 import "./styles.css";
 
 const schema = z.object({
@@ -19,6 +19,7 @@ type FormData = z.infer<typeof schema>;
 
 const LoginPage = () => {
   const { handleLogin, isLoggingIn } = useAuth();
+  const { isAuthenticated } = useAuthUser();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -34,6 +35,10 @@ const LoginPage = () => {
   const onSubmit = (data: FormData) => {
     handleLogin(data);
   };
+
+  if (isAuthenticated){
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <div className="register-container">

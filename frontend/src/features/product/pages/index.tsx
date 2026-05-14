@@ -18,6 +18,7 @@ import { toast } from "react-hot-toast";
 
 import { useProduct, useSubmitReview } from "@/features/product/hooks/product.hook";
 import { useProductUIStore } from "@/features/product/stores/product.store";
+import { useCart } from "@/features/cart/hooks/cart.hook";
 import type { Product } from "../types/product.types";
 
 import "swiper/css";
@@ -28,6 +29,7 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 
 import "./styles.css";
+import { useAddCartItem } from "../../cart/hooks/cart.hook";
 
 /* ================= COMPONENT ================= */
 
@@ -55,6 +57,9 @@ const ProductDetails = () => {
     setTab,
     reset,
   } = useProductUIStore();
+
+  // Cart Hook
+  const addCartMutation = useAddCartItem();
 
   /* ================= RESET ON PRODUCT CHANGE ================= */
   useEffect(() => {
@@ -91,80 +96,96 @@ const ProductDetails = () => {
     : product?.variants?.[0]?.stock || 0;
 
   /* ================= ADD TO CART ================= */
-  const handleAddToCart = () => {
-    if (!selectedVariant && product?.variants?.length) {
+  const handleAddToCart = async () => {
+    // Check if product has variants and none selected
+    if (product?.variants?.length && !selectedVariant) {
       toast.error("Please select a variant first");
       return;
     }
 
+    // Check stock
     if (currentStock === 0) {
       toast.error("Out of stock");
       return;
     }
 
+    // Check quantity
     if (quantity > currentStock) {
       toast.error(`Only ${currentStock} items available`);
       return;
     }
 
-    // TODO: Add to cart logic here
-    toast.success(`Added ${quantity} item(s) to cart`);
+    // Prepare cart data
+    const cartData = {
+      productId: product!.id,
+      variantId: selectedVariant || undefined,
+      quantity: quantity,
+    };
+
+    try {
+      await addCartMutation.mutateAsync(cartData);
+      // Success toast is already handled in the cart hook
+    } catch (error: any) {
+      // Error toast is already handled in the cart hook
+      console.error("Add to cart error:", error);
+    }
   };
 
   /* ================= SUBMIT REVIEW ================= */
- const handleSubmitReview = () => {
-  if (!id) {
-    toast.error("Product not found");
-    return;
-  }
-
-  const rating = Number(userRating);
-
-  if (!rating || rating < 1 || rating > 5) {
-    toast.error("Please select a rating between 1 and 5");
-    return;
-  }
-
-  const text = userReview.trim();
-
-  if (!text) {
-    toast.error("Please write your review");
-    return;
-  }
-
-  console.log("REVIEW PAYLOAD:", {
-  productId: id,
-  rating: userRating,
-  reviewText: userReview,
-  typeRating: typeof userRating,
-});
-
-  submitReviewMutation.mutate(
-    {
-      rating,
-      reviewText: text,
-    },
-    {
-      onSuccess: () => {
-        toast.success("Review submitted successfully");
-
-        // reset form
-        setUserRating(0);
-        setUserReview("");
-
-        // switch tab
-        setTab("reviews");
-      },
-
-      onError: (err: any) => {
-        toast.error(
-          err?.response?.data?.error?.message ||
-          "Failed to submit review"
-        );
-      },
+  const handleSubmitReview = () => {
+    if (!id) {
+      toast.error("Product not found");
+      return;
     }
-  );
-};
+
+    const rating = Number(userRating);
+
+    if (!rating || rating < 1 || rating > 5) {
+      toast.error("Please select a rating between 1 and 5");
+      return;
+    }
+
+    const text = userReview.trim();
+
+    if (!text) {
+      toast.error("Please write your review");
+      return;
+    }
+
+    console.log("REVIEW PAYLOAD:", {
+      productId: id,
+      rating: userRating,
+      reviewText: userReview,
+      typeRating: typeof userRating,
+    });
+
+    submitReviewMutation.mutate(
+      {
+        rating,
+        reviewText: text,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Review submitted successfully");
+
+          // reset form
+          setUserRating(0);
+          setUserReview("");
+
+          // switch tab
+          setTab("reviews");
+        },
+
+        onError: (err: any) => {
+          toast.error(
+            err?.response?.data?.error?.message ||
+            "Failed to submit review"
+          );
+        },
+      }
+    );
+  };
+
   /* ================= LOADING STATE ================= */
   if (isLoading) {
     return (
@@ -338,7 +359,7 @@ const ProductDetails = () => {
                       setQuantity(Math.max(1, quantity - 1))
                     }
                     className="qty-btn"
-                    disabled={currentStock === 0}
+                    disabled={currentStock === 0 || addCartMutation.isPending}
                   >
                     <FiMinus />
                   </button>
@@ -353,7 +374,9 @@ const ProductDetails = () => {
                     }
                     className="qty-btn"
                     disabled={
-                      currentStock === 0 || quantity >= currentStock
+                      currentStock === 0 || 
+                      quantity >= currentStock ||
+                      addCartMutation.isPending
                     }
                   >
                     <FiPlus />
@@ -363,15 +386,27 @@ const ProductDetails = () => {
                 <button
                   className="main-action-btn"
                   onClick={handleAddToCart}
-                  disabled={currentStock === 0}
+                  disabled={currentStock === 0 || addCartMutation.isPending}
                 >
-                  <FiShoppingCart />
-                  <span>
-                    {currentStock === 0 ? "Out of Stock" : "Add to cart"}
-                  </span>
+                  {addCartMutation.isPending ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                      Adding...
+                    </>
+                  ) : (
+                    <>
+                      <FiShoppingCart />
+                      <span>
+                        {currentStock === 0 ? "Out of Stock" : "Add to cart"}
+                      </span>
+                    </>
+                  )}
                 </button>
 
-                <button className="wishlist-icon-btn">
+                <button 
+                  className="wishlist-icon-btn"
+                  disabled={addCartMutation.isPending}
+                >
                   <FiHeart />
                 </button>
               </div>

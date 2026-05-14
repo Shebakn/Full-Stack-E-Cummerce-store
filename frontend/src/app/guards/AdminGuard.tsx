@@ -1,9 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuthStore } from "@/features/auth/store/auth.store"; 
+import { useAuthUser } from "../../features/auth/hooks/auth-user"; 
 
 export const AdminGuard = () => {
   const { isAuthenticated, isAdmin } =
-    useAuthStore();
+    useAuthUser();
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;

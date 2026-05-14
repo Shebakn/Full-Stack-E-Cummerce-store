@@ -33,4 +33,7 @@ export const ErrorMessages: Record<ErrorCodes, string> = {
 
 // DATA
 [ErrorCodes.INVALID_DATA]: 'Invalid data provided',
+
+NOT_FOUND: 'Resource not found',
+INVALID_COUPON: 'Invalid or expired coupon',
 };

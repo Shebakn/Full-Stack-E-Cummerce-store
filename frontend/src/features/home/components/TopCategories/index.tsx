@@ -6,12 +6,12 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import './styles.css';
 
-// 1. استيراد المكتبة
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import Skeleton from 'react-loading-skeleton';
+
 import 'react-loading-skeleton/dist/skeleton.css';
 
 import type { Category } from '@/common/interfaces/category.interface'; 
-import { useCategories } from '@/shared/components/layout/Header/hooks/category.hook';
+import { useCategories } from '@/common/hooks/category.hook';  
 const TopCategories = () => {
   const { categories, isLoading } = useCategories();
   
