@@ -5,13 +5,13 @@ import { UserResponseDto } from '@/user/dto/user-response.dto';
 export class MyProfileResponseDto extends UserResponseDto {
   @ApiProperty()
   @Expose()
-  phoneNumber: string;
+  phoneNumber!: string;
 
   @ApiProperty()
   @Expose()
-  address: string;
+  address!: string;
 
   @ApiProperty()
   @Expose()
-  age: number;
+  age!: number;
 }

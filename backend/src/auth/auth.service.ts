@@ -115,7 +115,7 @@ export class AuthService {
       throw new BaseException(
         ErrorCodes.MAIL_SEND_FAILED,
         HttpStatus.INTERNAL_SERVER_ERROR,
-        err?.message,
+        err instanceof Error ? err.message : 'Unknown error',
       );
     }
   }
