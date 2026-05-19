@@ -16,3 +16,51 @@
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
+.part2 {
+  width: 100%;
+}
+
+.part3 {
+  gap: 12px;
+}
+
+.mobile-gap {
+  gap: 8px;
+}
+
+.logoWrapper img {
+  max-width: 100%;
+  height: auto;
+}
+.header-flex {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* السيرش يتمدد */
+.header-search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 0 20px;
+}
+
+/* يخلي SearchBar يتمدد */
+.header-search .searchBar {
+  flex: 1;
+}
+
+/* الأزرار يمين */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* اللوقو */
+.logoWrapper img {
+  max-width: 100%;
+  height: auto;
+}

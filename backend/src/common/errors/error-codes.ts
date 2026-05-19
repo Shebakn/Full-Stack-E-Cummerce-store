@@ -48,4 +48,10 @@ export enum ErrorCodes {
   NOT_FOUND = "NOT_FOUND",
   INVALID_COUPON = "INVALID_COUPON",
   
+  // =========================
+  // COUNTRY
+  // =========================
+  COUNTRY_NOT_FOUND="Country not found",
+
+  REGION_NOT_FOUND="Region not found",
 }

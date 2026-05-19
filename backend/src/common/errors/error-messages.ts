@@ -36,4 +36,10 @@ export const ErrorMessages: Record<ErrorCodes, string> = {
 
 NOT_FOUND: 'Resource not found',
 INVALID_COUPON: 'Invalid or expired coupon',
+
+// COUNTRY
+[ErrorCodes.COUNTRY_NOT_FOUND]: 'Country not found',
+
+// REGION
+[ErrorCodes.REGION_NOT_FOUND]: 'Region not found',
 };

@@ -43,7 +43,7 @@ const TopCategories = () => {
             ))
           ) : (
             // 3. عرض البيانات الحقيقية عند الانتهاء
-            categories.map((cat: Category) => (
+            categories?.map((cat: Category) => (
               <SwiperSlide key={cat.id} style={{ width: 'auto' }}>
                 <div className="categoryCard">
                   <div className="imgWrapper">

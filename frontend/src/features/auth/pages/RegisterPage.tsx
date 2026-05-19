@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Form, Button, Spinner } from "react-bootstrap";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import { useAuth } from "../hooks/auth.hook";
-import { toast } from "react-hot-toast";
+import { useAuthUser } from "../hooks/auth-user";
 
 import "./styles.css";
 
@@ -22,7 +23,15 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const RegisterPage = () => {
-  const { handleRegister, isRegistering } = useAuth();
+  const { isAuthenticated } = useAuthUser();
+
+  const {
+    handleRegister,
+    isRegistering,
+    isRegisterSuccess,
+    isRegisterError,
+    registerError,
+  } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -34,13 +43,34 @@ const RegisterPage = () => {
     resolver: zodResolver(schema),
   });
 
+  /* ================= SUBMIT ================= */
   const onSubmit = (data: FormData) => {
-    handleRegister(data, {
-      onError: (err: any) => {
-        toast.error(err.message);
-      },
-    });
+    handleRegister(data);
   };
+
+  /* ================= TOASTS ================= */
+  useEffect(() => {
+    if (isRegisterSuccess) {
+      toast.success("Account created successfully");
+    }
+  }, [isRegisterSuccess]);
+
+  useEffect(() => {
+    if (isRegisterError) {
+      if (registerError?.details) {
+        Object.values(registerError.details).forEach((msg: any) => {
+          toast.error(msg);
+        });
+      } else {
+        toast.error(registerError?.message || "Register failed");
+      }
+    }
+  }, [isRegisterError]);
+
+  /* ================= REDIRECT ================= */
+  if (isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <div className="register-container">
@@ -97,11 +127,7 @@ const RegisterPage = () => {
             className="btn-register w-100 mt-4"
             disabled={isRegistering}
           >
-            {isRegistering ? (
-              <Spinner size="sm" />
-            ) : (
-              "Create Account"
-            )}
+            {isRegistering ? <Spinner size="sm" /> : "Create Account"}
           </Button>
         </Form>
 

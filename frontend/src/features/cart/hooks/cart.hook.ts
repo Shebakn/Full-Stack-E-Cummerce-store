@@ -9,6 +9,8 @@ import {
   applyCoupon,
   removeCoupon,
 } from "@/features/cart/services/cart.service";
+import { getToken } from "../../../common/utils/auth-token";
+import { useAuthUser } from "../../auth/hooks/auth-user";
 
 /* ========================================================= */
 /* QUERY KEYS */
@@ -24,13 +26,19 @@ export const cartKeys = {
 /* ========================================================= */
 
 export const useCart = () => {
+  const token = getToken();
+  const { isAuthenticated } = useAuthUser();
+
   return useQuery({
     queryKey: cartKeys.detail(),
     queryFn: getCart,
 
-    // مهم لتقليل refetch غير الضروري
-    staleTime: 1000 * 10, // 10 sec
+    enabled: isAuthenticated && !!token,
+
+    retry: false,
     refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    staleTime: 1000 * 10, // 10 sec
   });
 };
 

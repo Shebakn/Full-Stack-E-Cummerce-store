@@ -1,12 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { getProfile } from "../services/auth.service";
-import { getToken, removeToken } from "@/common/utils/auth-token";
-import type { User } from "../../../common/interfaces/user.interface";
+import { getToken } from "@/common/utils/auth-token";
 
 export const AUTH_QUERY_KEY = ["auth-user"];
 
 export const useAuthUser = () => {
-  const token = getToken();
 
   const query = useQuery({
     queryKey: AUTH_QUERY_KEY,
@@ -16,7 +14,10 @@ export const useAuthUser = () => {
       return res.data;
     },
 
-    enabled: !!token, // 🔥 يشتغل فقط إذا فيه token
+    enabled: !!getToken(), 
+
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
 
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 30,

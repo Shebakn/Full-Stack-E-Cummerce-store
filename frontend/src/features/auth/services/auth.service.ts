@@ -39,6 +39,7 @@ const handleApiError = (error: any) => {
 export const login = async (data: LoginData): Promise<AuthResponse> => {
   try {
     const res = await api.post("/auth/login", data);
+    console.log("Login response: ", res.data)
     return res.data;
   } catch (error) {
     throw handleApiError(error);
@@ -59,7 +60,6 @@ export const register = async (data: RegisterData): Promise<AuthResponse> => {
 export const getProfile = async () => {
   try {
     const res = await api.get("/profile/me");
-    console.log("Auth me: ", res.data)
     return res.data;
   } catch (error) {
     throw handleApiError(error);

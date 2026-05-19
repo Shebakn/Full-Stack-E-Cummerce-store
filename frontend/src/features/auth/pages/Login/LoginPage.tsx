@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,6 +9,7 @@ import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth.hook";
 import { useAuthUser } from "../../hooks/auth-user";
 import "./styles.css";
+import toast from "react-hot-toast";
 
 const schema = z.object({
   email: z.string().email("Invalid email"),
@@ -18,8 +19,10 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const LoginPage = () => {
-  const { handleLogin, isLoggingIn } = useAuth();
+
   const { isAuthenticated } = useAuthUser();
+  
+  const { handleLogin, isLoggingIn, isLoginError, loginError, isLoginSuccess } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -31,14 +34,27 @@ const LoginPage = () => {
     resolver: zodResolver(schema),
   });
 
+
+  useEffect(() => {
+  if (isLoginError) {
+    toast.error(loginError?.message || "Login failed");
+  }
+}, [loginError]);
+
+useEffect(() => {
+  if (isLoginSuccess) {
+    toast.success("Login successful");
+  }
+}, [isLoginSuccess]);
+
+  if (isAuthenticated) {
+  return <Navigate to="/" replace />;
+}
+
   /* ================= IMPORTANT FIX ================= */
   const onSubmit = (data: FormData) => {
     handleLogin(data);
   };
-
-  if (isAuthenticated){
-    return <Navigate to="/" replace />;
-  }
 
   return (
     <div className="register-container">

@@ -283,6 +283,71 @@ model CartItem {
   @@unique([cartId, productId, variantId])
 }
 
+
+// ================= COUNTRY =================
+
+model Country {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  code      String?  // SA, AE, YE ...
+  isActive  Boolean  @default(true)
+
+  regions   Region[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([code])
+}
+
+// ================= REGION =================
+
+model Region {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+
+  countryId String   @db.Uuid
+  country   Country  @relation(fields: [countryId], references: [id], onDelete: Cascade)
+
+  centers   DeliveryCenter[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([countryId])
+  @@unique([name, countryId])
+}
+
+// ================= DELIVERY CENTER =================
+
+model DeliveryCenter {
+  id        String   @id @default(uuid()) @db.Uuid
+
+  name      String
+  address   String?
+
+  // coordinates for map
+  latitude  Float
+  longitude Float
+
+  phone     String?
+  isActive  Boolean  @default(true)
+
+  // relations
+  regionId  String   @db.Uuid
+  region    Region   @relation(fields: [regionId], references: [id], onDelete: Cascade)
+
+  // optional: delivery constraints
+  deliveryFee Float   @default(0)
+  etaMinutes  Int?    // estimated delivery time
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([regionId])
+  @@index([latitude, longitude])
+}
+
 // ================= ORDER =================
 
 model Order {

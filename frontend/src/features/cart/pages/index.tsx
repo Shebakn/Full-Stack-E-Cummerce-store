@@ -96,8 +96,8 @@ const CartSkeleton = () => {
 
 const CartPage = () => {
   const { data, isLoading } = useCart();
-  console.log("Cart data:", data);
-  
+
+
   const updateMutation = useUpdateCartItem();
   const removeMutation = useRemoveCartItem();
   const clearMutation = useClearCart();
@@ -195,6 +195,8 @@ const CartPage = () => {
           >
             Clear Cart
           </button>
+
+          <Link to="/d"><span className="count">Delivery</span> </Link>
         </div>
 
         <Row className="gy-4">

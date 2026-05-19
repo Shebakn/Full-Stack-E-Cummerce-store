@@ -1,36 +1,67 @@
-import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import IconButton from '@mui/material/IconButton';
-import Slide from '@mui/material/Slide';
+import React, { useState } from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import IconButton from "@mui/material/IconButton";
+import Slide from "@mui/material/Slide";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { FaAngleDown } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
 
-import type { TransitionProps } from '@mui/material/transitions';
+import type { TransitionProps } from "@mui/material/transitions";
 
-// Transition (TypeScript safe)
+/* ================= TRANSITION ================= */
 const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & { children: React.ReactElement<any, any> },
+  props: TransitionProps & { children: React.ReactElement },
   ref: React.Ref<unknown>
 ) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CountryDropdown: React.FC = () => {
+/* ================= TYPES ================= */
+export type Country = {
+  id: string;
+  name: string;
+  code?: string;
+};
+
+type Props = {
+  countries: Country[];
+  loading?: boolean;
+  selectedCountry?: Country | null;
+  onSelectCountry: (country: Country) => void;
+};
+
+const CountryDropdown: React.FC<Props> = ({
+  countries,
+  loading = false,
+  selectedCountry,
+  onSelectCountry,
+}) => {
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
+
+  const [ selected, setSelected ] = useState(selectedCountry)
+  const filteredCountries = countries.filter((c) =>
+    c.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const handleSelect = (country: Country) => {
+    onSelectCountry(country);
+    setSelected(country);
+    setOpen(false);
+  };
 
   return (
     <>
-      {/* Dropdown Button */}
-      <Button
-        className="countryDropdown"
-        onClick={() => setOpen(true)}
-      >
+      {/* ================= TRIGGER ================= */}
+      <Button className="countryDropdown" onClick={() => setOpen(true)}>
         <div className="info">
           <span className="label">Your Location</span>
-          <span className="name">Select Location</span>
+          <span className="name">
+            {selected ? selected.name : "Select Location"}
+          </span>
         </div>
 
         <span className="arrowIcon">
@@ -38,44 +69,56 @@ const CountryDropdown: React.FC = () => {
         </span>
       </Button>
 
-      {/* Dialog */}
+      {/* ================= DIALOG ================= */}
       <Dialog
         open={open}
         onClose={() => setOpen(false)}
         className="locationDialog"
         TransitionComponent={Transition}
       >
-        {/* Close Button */}
-        <IconButton
-          className="closeBtn"
-          onClick={() => setOpen(false)}
-        >
+        <IconButton className="closeBtn" onClick={() => setOpen(false)}>
           <MdClose />
         </IconButton>
 
-        {/* Header */}
         <h4>Choose Your Delivery Location</h4>
-        <p>
-          Enter your address and we will specify the offer for your area.
-        </p>
+        <p>Enter your country to continue shopping.</p>
 
-        {/* Search */}
+        {/* ================= SEARCH ================= */}
         <div className="locationSearch">
-          <input type="text" placeholder="Search your area..." />
+          <input
+            type="text"
+            placeholder="Search country..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
 
           <Button className="searchBtn">
             <IoSearch />
           </Button>
         </div>
 
-        {/* Countries List */}
+        {/* ================= LIST ================= */}
         <ul className="countriesList">
-          <li><Button>Yemen</Button></li>
-          <li><Button>Saudi Arabia</Button></li>
-          <li><Button>United Arab Emirates</Button></li>
-          <li><Button>Oman</Button></li>
-          <li><Button>Kuwait</Button></li>
-          <li><Button>Bahrain</Button></li>
+          {loading ? (
+            <div style={{ padding: 20, textAlign: "center" }}>
+              <CircularProgress size={24} />
+            </div>
+          ) : filteredCountries.length > 0 ? (
+            filteredCountries.map((country) => (
+              <li key={country.id}>
+                <Button
+                  className={
+                    selectedCountry?.id === country.id ? "active" : ""
+                  }
+                  onClick={() => handleSelect(country)}
+                >
+                  {country.name}
+                </Button>
+              </li>
+            ))
+          ) : (
+            <p style={{ padding: 10, color: "#999" }}>No countries found</p>
+          )}
         </ul>
       </Dialog>
     </>

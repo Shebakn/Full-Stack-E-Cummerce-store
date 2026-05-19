@@ -1,14 +1,13 @@
-
+// api/client.ts
 import axios from "axios";
-import { useAuthStore } from "@/features/auth/store/auth.store";
-import { getToken } from "@/common/utils/auth-token";
+import { getToken, removeToken } from "@/common/utils/auth-token";
 
 const api = axios.create({
   baseURL: "http://localhost:3000/api/v1",
   timeout: 10000,
 });
 
-// ✅ إضافة التوكن
+/* ================= REQUEST ================= */
 api.interceptors.request.use((config) => {
   const token = getToken();
 
@@ -19,19 +18,17 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// 🔥 التعامل مع 401 هنا (مو في React Query)
+/* ================= RESPONSE ================= */
 api.interceptors.response.use(
   (res) => res,
   (error) => {
-    const status = error?.response?.status;
+    if (error?.response?.status === 401) {
+      removeToken();
 
-    if (status === 401) {
-      const { logout } = useAuthStore.getState();
-
-      logout();
-
-      // إعادة توجيه (بدون hook)
-      window.location.href = "/login";
+      // منع loop
+      // setTimeout(() => {
+      //   window.location.href = "/login";
+      // }, 50);
     }
 
     return Promise.reject(error);

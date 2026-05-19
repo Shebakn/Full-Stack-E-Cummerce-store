@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 import FeatureSection from "../components/FeatureSection";
 import HomeBanner from "../components/HomeBanner";
@@ -12,8 +12,11 @@ import ProductSection from "../components/ProductSection";
 import { useNewArrivals } from "../hooks/new-arrivals.hook";
 import TopCategories from "../components/TopCategories";
 import { useCategories } from "../../../common/hooks/category.hook";
+import { useAuthUser } from "../../auth/hooks/auth-user";
 const HomePage = () => {
 
+  const { isAuthenticated } = useAuthUser();
+  
   const { filters, setFilters } = useBestSellersStore();
 
   const {
@@ -27,6 +30,12 @@ const HomePage = () => {
   } = useNewArrivals();
 
   const { categories } = useCategories();
+
+  if (isAuthenticated){
+    
+  }
+
+  
 
   return (
     <>

@@ -14,7 +14,9 @@ import { ProductImageModule } from './productImage/product-image.module';
 import { ReviewModule } from './reviews/review.module';
 import { ProductVariantModule } from './productVarient/product-variant.module';
 import { CartModule } from './cart/cart.module';
-
+import { CountryModule } from './country/country.module';
+import { RegionModule } from './region/region.module';
+import { DeliveryCenterModule } from './delivery-center/delivery-center.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -52,6 +54,12 @@ import { CartModule } from './cart/cart.module';
     ProductImageModule,
 
     CartModule,
+
+    CountryModule,
+
+    RegionModule,
+
+    DeliveryCenterModule,
   ],
 })
 export class AppModule {}
