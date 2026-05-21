@@ -101,12 +101,9 @@ async function bootstrap() {
   // START SERVER
   // =========================
   app.enableCors({
-  origin: [
-    "http://localhost:5173",
-    "https://full-stack-e-cummerce-store7.vercel.app/"
-  ],
-  credentials: true,
-});
+    origin: "*",
+    credentials: true
+  });
 
   const port = process.env.PORT || 3000;
 
