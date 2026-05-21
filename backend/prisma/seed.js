@@ -39,6 +39,7 @@ const client_2 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 async function main() {
     const hashedPassword = await bcrypt.hash('admin123', 10);
+    // 🔥 احذف أي admin قديم قبل الإدخال
     await prisma.user.deleteMany({
         where: {
             email: 'admin@gmail.com',

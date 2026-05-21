@@ -8,7 +8,7 @@ import { PrismaService } from '@/prisma/prisma.service';
 import { CloudinaryService } from '@/cloudinary/cloudinary.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { QueryProductDto } from './dto/query-product.dto';
-import { Prisma } from '@prisma/client';
+import { Prisma, ProductImage, ProductVariant } from '@prisma/client';
 
 import { ErrorCodes } from '@/common/errors/error-codes';
 import { BaseException } from '@/common/exceptions/base.exception';
@@ -275,20 +275,20 @@ else if (query.categoryIds?.length) {
 
       brand: p.brand ?? null,
 
-      images: p.images?.map((img) => ({
+      images: p.images?.map((img: ProductImage) => ({
         id: img.id,
         isCover: img.isCover,
         position: img.position,
         url: this.transform(img.url),
       })),
 
-      variants: p.variants?.map((v) => ({
+      variants: p.variants?.map((v: ProductVariant) => ({
         id: v.id,
         sku: v.sku,
         price: Number(v.price),
         stock: v.stock,
 
-        attributes: v.attributes,
+        // attributes: v.attributes,
       })),
 
       reviews: p.reviews ?? [],

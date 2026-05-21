@@ -63,12 +63,12 @@ export const ApiErrorResponses = (statuses?: ErrorStatus[]) => {
     ...selected.map((status) =>
       ApiResponse({
         status: Number(status),
-        description: all[status].description,
+        description: all[status as keyof typeof all].description,
         schema: {
           example: {
             data: null,
             meta: null,
-            ...all[status].example,
+            ...all[status as keyof typeof all].example,
             timestamp: new Date().toISOString(),
           },
         },
