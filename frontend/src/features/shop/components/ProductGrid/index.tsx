@@ -103,7 +103,7 @@ const ProductGrid: React.FC<Props> = ({ products, loading = false }) => {
           size="small"
         />
         <span className="reviewCount">
-          ({product.ratingsQuantity || 0})
+          ({product.ratingsQuantity || 0} Reviews)
         </span>
       </div>
 
