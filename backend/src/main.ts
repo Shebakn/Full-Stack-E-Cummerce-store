@@ -103,7 +103,7 @@ async function bootstrap() {
   app.enableCors({
   origin: [
     "http://localhost:5173",
-    "https://full-stack-e-cummerce-store.vercel.app/"
+    "https://full-stack-e-cummerce-store7.vercel.app/"
   ],
   credentials: true,
 });
